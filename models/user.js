@@ -15,6 +15,8 @@ const schema = new mongoose.Schema(
         },
       },
     },
+    id: false,
+    versionKey: false,
   }
 );
 
