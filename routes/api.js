@@ -9,7 +9,7 @@ router.post('/users', async (req, res, next) => {
     await user.save();
     res.json({
       username: user.username,
-      _id: user.id,
+      _id: user._id,
     });
   } catch (error) {
     next(error);
@@ -30,7 +30,7 @@ router.post('/users/:id/exercises', async (req, res, next) => {
       description,
       duration,
       date,
-      _id: exercise.id,
+      _id: exercise._id,
     });
   } catch (error) {
     next(error);
