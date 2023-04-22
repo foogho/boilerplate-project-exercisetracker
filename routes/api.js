@@ -37,4 +37,29 @@ router.post('/users/:id/exercises', async (req, res, next) => {
   }
 });
 
+router.get('/users/:id/logs', async (req, res, next) => {
+  try {
+    const userId = req.params.id;
+    const { from, to, limit } = req.query;
+    const user = await User.findById(userId, { 'log._id': 0 });
+    let log = user.log;
+    if (from) {
+      log = log.filter((exercise) => {
+        const exerciseDate = dayjs(exercise.date);
+        return exerciseDate.isAfter(from) || exerciseDate.isSame(from, 'day');
+      });
+    }
+    if (to) {
+      log = log.filter((exercise) => {
+        const exerciseDate = dayjs(exercise.date);
+        return exerciseDate.isBefore(to) || exerciseDate.isSame(to, 'day');
+      });
+    }
+    user.log = log.slice(0, limit);
+    res.json(user.toObject({ virtuals: true, getters: true }));
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
