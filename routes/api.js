@@ -33,7 +33,7 @@ router.post('/users/:id/exercises', async (req, res, next) => {
     user.log.push(exercise);
     await user.save();
     res.json({
-      ...exercise.toObject({getters : true}),
+      ...exercise.toObject(),
       _id: user._id,
       username: user.username
     });
@@ -61,7 +61,7 @@ router.get('/users/:id/logs', async (req, res, next) => {
       });
     }
     user.log = log.slice(0, limit);
-    res.json(user.toObject({ virtuals: true, getters: true }));
+    res.json(user.toObject({ virtuals: true }));
   } catch (err) {
     next(err);
   }

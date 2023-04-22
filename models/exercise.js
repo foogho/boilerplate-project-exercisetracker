@@ -11,5 +11,5 @@ module.exports = new mongoose.Schema(
       },
     },
   },
-  { id: false, versionKey: false }
+  { id: false, versionKey: false , toObject : { getters : true } }
 );
