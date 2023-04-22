@@ -16,6 +16,12 @@ router.post('/users', async (req, res, next) => {
   }
 });
 
+router.get('/users', (req,res,next)=>{
+  User.find({},{log : 0}).then((users)=>{
+    res.json(users)
+  }).catch(next)
+})
+
 router.post('/users/:id/exercises', async (req, res, next) => {
   try {
     const userId = req.params.id;
